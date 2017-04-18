@@ -61,12 +61,165 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-help">module gulp-help</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-help.gulp-help">
+            function <span class="apidocSignatureSpan"></span>gulp-help
+            <span class="apidocSignatureSpan">(gulp, options)</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.gulp-help" id="apidoc.module.gulp-help">module gulp-help</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-help.gulp-help" id="apidoc.element.gulp-help.gulp-help">
+        function <span class="apidocSignatureSpan"></span>gulp-help
+        <span class="apidocSignatureSpan">(gulp, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">gulp-help = function (gulp, options) {
+  var originalTaskFn = gulp.task;
+
+  options = objectAssign({}, DEFAULT_OPTIONS, options);
+
+<span class="apidocCodeCommentSpan">  /**
+   * gulp.task(name[, help, deps, fn, taskOptions])
+   *
+   * Adds `help` and `taskOptions` to the typical gulp task definition:
+   * https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulptaskname-deps-fn
+   * @param {string} name
+   * @param {string | boolean} [help]
+   * @param {Array} [deps]
+   * @param {function} [fn]
+   * @param {object} [taskOptions]
+   */
+</span>  gulp.task = function (name, help, deps, fn, taskOptions) {
+    var task;
+
+    /* jshint noempty: false */
+    if (name &#x26;&#x26; (help === null || help === undefined)) {
+      // just a name. do nothing.
+    } else if (help === false) {
+      // .task(&#x27;test&#x27;, false, ...)
+      //ignoredTasks.push(name);
+      if (typeof deps === &#x27;function&#x27;) {
+        // .task(&#x27;test&#x27;, false, function(){}, {})
+        taskOptions = fn;
+        fn = deps;
+        deps = undefined;
+      } else {
+        // .task(&#x27;test&#x27;, false, [&#x27;dep&#x27;], function(){}, {})
+        // nothing needs to be re-assigned
+      }
+    } else if (typeof help === &#x27;function&#x27;) {
+      // .task(&#x27;test&#x27;, function(){})
+      taskOptions = deps;
+      fn = undefined;
+      deps = help;
+      help = undefined;
+    } else if (Array.isArray(help)) {
+      // .task(&#x27;test&#x27;, [&#x27;dep&#x27;], ...)
+      taskOptions = fn;
+      fn = deps;
+      deps = help;
+      help = undefined;
+    } else if (name &#x26;&#x26; !deps) {
+      // .task(&#x27;test&#x27;, &#x27;...&#x27;)
+      // help text with no func and no deps
+    } else if (typeof deps === &#x27;function&#x27;) {
+      // .task(&#x27;test&#x27;, &#x27;...&#x27;, function, {})
+      taskOptions = fn;
+      fn = deps;
+      deps = undefined;
+    } else if (Array.isArray(deps)) {
+      // .task(&#x27;test&#x27;, &#x27;...&#x27;, [&#x27;dep&#x27;], function, {})
+      // nothing needs to be re-assigned
+    } else {
+      throw new Error(&#x27;gulp-help: Unexpected arg types. Should be in the form: `gulp.task(name[, help, deps, fn, taskOptions])`&#x27;);
+    }
+
+    if (!deps) {
+      originalTaskFn.call(gulp, name, fn);
+    } else {
+      originalTaskFn.call(gulp, name, deps, fn);
+    }
+
+    task = gulp.tasks[name];
+
+    taskOptions = objectAssign({
+      aliases: []
+    }, taskOptions);
+
+
+    taskOptions.aliases.forEach(function (alias) {
+      gulp.task(alias, false, [name], noop);
+    });
+
+    attachHelp(task, help, deps, taskOptions);
+
+    return gulp;
+  };
+
+  gulp.task(&#x27;help&#x27;, options.description, function () {
+    var marginData = calculateMargin(gulp.tasks);
+    var margin = marginData.margin;
+    var hideDepsMessageOpt = options.hideDepsMessage;
+    var hideEmptyOpt = options.hideEmpty;
+    var showAllTasks = process.argv.indexOf(&#x27;--all&#x27;) !== -1;
+    var afterPrintCallback = options.afterPrintCallback;
+
+    // set options buffer if the tasks array has options
+    var optionsBuffer = marginData.hasOptions ? &#x27;  --&#x27; : &#x27;&#x27;;
+
+    console.log(&#x27;&#x27;);
+    console.log(chalk.underline(&#x27;Usage&#x27;));
+    console.log(&#x27;  gulp [TASK] [OPTIONS...]&#x27;);
+    console.log(&#x27;&#x27;);
+    console.log(chalk.underline(&#x27;Available tasks&#x27;));
+    Object.keys(gulp.tasks).sort().forEach(function (name) {
+      if (gulp.tasks[name].help || showAllTasks) {
+        var help = gulp.tasks[name].help || {message: &#x27;&#x27;, options: {}};
+
+        if (!showAllTasks &#x26;&#x26; help.message === &#x27;&#x27; &#x26;&#x26; hideEmptyOpt) {
+          return; //skip task
+        }
+        var args = [&#x27; &#x27;, chalk.cyan(name)];
+
+        args.push(new Array(margin - name.length + 1 + optionsBuffer.length).join(&#x27; &#x27;));
+
+        if (help.message) {
+          args.push(help.message);
+        }
+
+        if (help.aliases) {
+          args.push(help.aliases);
+        }
+
+        if (help.depsMessage &#x26;&#x26; !hideDepsMessageOpt) {
+          args.push(chalk.cyan(help.depsMessage));
+        }
+
+        var options = Object.keys(help.options).sort();
+        options.forEach(function (option) {
+          var optText = help.options[option];
+          args.push(&#x27;\n &#x27; + optionsBuffer + chalk.cyan(option) + &#x27; &#x27;);
+
+          args.push(new Array(margin - option.length + 1).join(&#x27; &#x27;));
+          args.push(optText);
+        });
+
+        console.log.apply(console, args); ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 

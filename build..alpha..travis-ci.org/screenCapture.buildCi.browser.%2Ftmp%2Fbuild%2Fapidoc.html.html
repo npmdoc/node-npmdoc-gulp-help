@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/chmontgomery/gulp-help#readme"
-
-    >gulp-help (v1.6.1)</a>
+    <a href="https://github.com/chmontgomery/gulp-help#readme">gulp-help (v1.6.1)</a>
 </h1>
 <h4>Adds a default help task to gulp and provides the ability to add custom help messages to your gulp tasks</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-help">module gulp-help</a><ol>
 
@@ -105,45 +98,45 @@
     var task;
 
     /* jshint noempty: false */
-    if (name &#x26;&#x26; (help === null || help === undefined)) {
+    if (name &amp;&amp; (help === null || help === undefined)) {
       // just a name. do nothing.
     } else if (help === false) {
-      // .task(&#x27;test&#x27;, false, ...)
+      // .task('test', false, ...)
       //ignoredTasks.push(name);
-      if (typeof deps === &#x27;function&#x27;) {
-        // .task(&#x27;test&#x27;, false, function(){}, {})
+      if (typeof deps === 'function') {
+        // .task('test', false, function(){}, {})
         taskOptions = fn;
         fn = deps;
         deps = undefined;
       } else {
-        // .task(&#x27;test&#x27;, false, [&#x27;dep&#x27;], function(){}, {})
+        // .task('test', false, ['dep'], function(){}, {})
         // nothing needs to be re-assigned
       }
-    } else if (typeof help === &#x27;function&#x27;) {
-      // .task(&#x27;test&#x27;, function(){})
+    } else if (typeof help === 'function') {
+      // .task('test', function(){})
       taskOptions = deps;
       fn = undefined;
       deps = help;
       help = undefined;
     } else if (Array.isArray(help)) {
-      // .task(&#x27;test&#x27;, [&#x27;dep&#x27;], ...)
+      // .task('test', ['dep'], ...)
       taskOptions = fn;
       fn = deps;
       deps = help;
       help = undefined;
-    } else if (name &#x26;&#x26; !deps) {
-      // .task(&#x27;test&#x27;, &#x27;...&#x27;)
+    } else if (name &amp;&amp; !deps) {
+      // .task('test', '...')
       // help text with no func and no deps
-    } else if (typeof deps === &#x27;function&#x27;) {
-      // .task(&#x27;test&#x27;, &#x27;...&#x27;, function, {})
+    } else if (typeof deps === 'function') {
+      // .task('test', '...', function, {})
       taskOptions = fn;
       fn = deps;
       deps = undefined;
     } else if (Array.isArray(deps)) {
-      // .task(&#x27;test&#x27;, &#x27;...&#x27;, [&#x27;dep&#x27;], function, {})
+      // .task('test', '...', ['dep'], function, {})
       // nothing needs to be re-assigned
     } else {
-      throw new Error(&#x27;gulp-help: Unexpected arg types. Should be in the form: `gulp.task(name[, help, deps, fn, taskOptions])`&#x27;);
+      throw new Error('gulp-help: Unexpected arg types. Should be in the form: `gulp.task(name[, help, deps, fn, taskOptions])`');
     }
 
     if (!deps) {
@@ -168,32 +161,32 @@
     return gulp;
   };
 
-  gulp.task(&#x27;help&#x27;, options.description, function () {
+  gulp.task('help', options.description, function () {
     var marginData = calculateMargin(gulp.tasks);
     var margin = marginData.margin;
     var hideDepsMessageOpt = options.hideDepsMessage;
     var hideEmptyOpt = options.hideEmpty;
-    var showAllTasks = process.argv.indexOf(&#x27;--all&#x27;) !== -1;
+    var showAllTasks = process.argv.indexOf('--all') !== -1;
     var afterPrintCallback = options.afterPrintCallback;
 
     // set options buffer if the tasks array has options
-    var optionsBuffer = marginData.hasOptions ? &#x27;  --&#x27; : &#x27;&#x27;;
+    var optionsBuffer = marginData.hasOptions ? '  --' : '';
 
-    console.log(&#x27;&#x27;);
-    console.log(chalk.underline(&#x27;Usage&#x27;));
-    console.log(&#x27;  gulp [TASK] [OPTIONS...]&#x27;);
-    console.log(&#x27;&#x27;);
-    console.log(chalk.underline(&#x27;Available tasks&#x27;));
+    console.log('');
+    console.log(chalk.underline('Usage'));
+    console.log('  gulp [TASK] [OPTIONS...]');
+    console.log('');
+    console.log(chalk.underline('Available tasks'));
     Object.keys(gulp.tasks).sort().forEach(function (name) {
       if (gulp.tasks[name].help || showAllTasks) {
-        var help = gulp.tasks[name].help || {message: &#x27;&#x27;, options: {}};
+        var help = gulp.tasks[name].help || {message: '', options: {}};
 
-        if (!showAllTasks &#x26;&#x26; help.message === &#x27;&#x27; &#x26;&#x26; hideEmptyOpt) {
+        if (!showAllTasks &amp;&amp; help.message === '' &amp;&amp; hideEmptyOpt) {
           return; //skip task
         }
-        var args = [&#x27; &#x27;, chalk.cyan(name)];
+        var args = [' ', chalk.cyan(name)];
 
-        args.push(new Array(margin - name.length + 1 + optionsBuffer.length).join(&#x27; &#x27;));
+        args.push(new Array(margin - name.length + 1 + optionsBuffer.length).join(' '));
 
         if (help.message) {
           args.push(help.message);
@@ -203,16 +196,16 @@
           args.push(help.aliases);
         }
 
-        if (help.depsMessage &#x26;&#x26; !hideDepsMessageOpt) {
+        if (help.depsMessage &amp;&amp; !hideDepsMessageOpt) {
           args.push(chalk.cyan(help.depsMessage));
         }
 
         var options = Object.keys(help.options).sort();
         options.forEach(function (option) {
           var optText = help.options[option];
-          args.push(&#x27;\n &#x27; + optionsBuffer + chalk.cyan(option) + &#x27; &#x27;);
+          args.push('\n ' + optionsBuffer + chalk.cyan(option) + ' ');
 
-          args.push(new Array(margin - option.length + 1).join(&#x27; &#x27;));
+          args.push(new Array(margin - option.length + 1).join(' '));
           args.push(optText);
         });
 
@@ -229,3 +222,4 @@
     ]
 </div>
 </div>
+</body></html>
