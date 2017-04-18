@@ -1,9 +1,14 @@
-# api documentation for  [gulp-help (v1.6.1)](https://github.com/chmontgomery/gulp-help#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-help.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-help) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-help.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-help)
+# npmdoc-gulp-help
+
+#### api documentation for  [gulp-help (v1.6.1)](https://github.com/chmontgomery/gulp-help#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-help.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-help) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-help.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-help)
+
 #### Adds a default help task to gulp and provides the ability to add custom help messages to your gulp tasks
 
-[![NPM](https://nodei.co/npm/gulp-help.png?downloads=true)](https://www.npmjs.com/package/gulp-help)
+[![NPM](https://nodei.co/npm/gulp-help.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/gulp-help)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-gulp-help/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-gulp-help_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-gulp-help/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-gulp-help/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-gulp-help/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-gulp-help/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-gulp-help/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-gulp-help/build/screenCapture.npmPackageListing.svg)
 
@@ -18,7 +23,6 @@
 {
     "author": {
         "name": "Chris Montgomery",
-        "email": "chr.montgomery@gmail.com",
         "url": "http://www.chrismontgomery.info/"
     },
     "bugs": {
@@ -93,13 +97,11 @@
     "main": "index.js",
     "maintainers": [
         {
-            "name": "chmontgomery",
-            "email": "chr.montgomery@gmail.com"
+            "name": "chmontgomery"
         }
     ],
     "name": "gulp-help",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/chmontgomery/gulp-help.git"
@@ -110,16 +112,6 @@
     "version": "1.6.1"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module gulp-help](#apidoc.module.gulp-help)
-
-
-
-# <a name="apidoc.module.gulp-help"></a>[module gulp-help](#apidoc.module.gulp-help)
 
 
 
