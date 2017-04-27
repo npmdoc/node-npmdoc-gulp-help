@@ -1,6 +1,6 @@
 # npmdoc-gulp-help
 
-#### api documentation for  [gulp-help (v1.6.1)](https://github.com/chmontgomery/gulp-help#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-help.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-help) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-help.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-help)
+#### basic api documentation for  [gulp-help (v1.6.1)](https://github.com/chmontgomery/gulp-help#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-help.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-help) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-help.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-help)
 
 #### Adds a default help task to gulp and provides the ability to add custom help messages to your gulp tasks
 
@@ -109,7 +109,8 @@
     "scripts": {
         "test": "mocha"
     },
-    "version": "1.6.1"
+    "version": "1.6.1",
+    "bin": {}
 }
 ```
 
